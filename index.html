@@ -34,7 +34,7 @@
 }
 </script>
 <style>
-:root{color-scheme:dark;--bg:#080B18;--surface:#10182b;--surface2:#151f35;--text:#f4f7ff;--muted:#aab5cc;--line:#26334c;--accent:#00d4ff;--accent-soft:rgba(0,212,255,.1);--max:1080px}
+:root{color-scheme:dark;--bg:#080B18;--surface:#10182b;--surface2:#151f35;--text:#f4f7ff;--muted:#aab5cc;--line:#26334c;--accent:#83b7bd;--accent-soft:rgba(131,183,189,.09);--max:1080px}
 *{box-sizing:border-box}
 html{scroll-behavior:smooth;scroll-padding-top:88px}
 body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,Cairo,system-ui,sans-serif;line-height:1.7}
@@ -49,9 +49,9 @@ header{position:sticky;top:0;z-index:10;background:rgba(8,11,24,.9);backdrop-fil
 .navlinks a{font-size:.88rem;color:var(--muted);text-decoration:none}
 .navlinks a:hover,.navlinks a:focus-visible{color:var(--accent)}
 .lang{border:1px solid var(--line);background:var(--surface);color:var(--text);border-radius:8px;padding:7px 12px;cursor:pointer}
-.hero{padding:112px 0 82px;max-width:none;display:grid;grid-template-columns:minmax(0,1.15fr) minmax(280px,.85fr);align-items:center;gap:48px;position:relative}.hero-copy{max-width:760px}.hero-visual{position:relative;border:1px solid #263650;border-radius:18px;background:#0d1422;padding:25px;box-shadow:none;overflow:hidden}.hero-visual:before{display:none}.terminal-top{display:flex;align-items:center;gap:7px;padding-bottom:16px;border-bottom:1px solid var(--line);position:relative}.terminal-dot{width:8px;height:8px;border-radius:50%;background:#52627c}.terminal-label{margin-left:auto;color:#8190aa;font-size:.72rem;letter-spacing:.08em}.terminal-body{position:relative;padding-top:18px;font:500 .86rem/2.1 ui-monospace,SFMono-Regular,Consolas,monospace;color:#c5d4e9}.terminal-body .muted-code{color:#71839f}.terminal-body .cyan-code{color:var(--accent)}.terminal-tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px;position:relative}.terminal-tags span{font-size:.72rem;color:#b9c8df;border:1px solid #2a3c58;border-radius:6px;padding:4px 8px;background:rgba(5,12,25,.5)}
+.hero{padding:112px 0 82px;max-width:none;display:grid;grid-template-columns:minmax(0,1.15fr) minmax(280px,.85fr);align-items:center;gap:48px;position:relative}.hero-copy{max-width:760px}.hero-visual{position:relative;border:1px solid #263650;border-radius:12px;background:#0d1422;padding:28px;box-shadow:none;overflow:hidden;border-radius:4px 12px 12px 4px}.hero-visual:before{display:none}.focus-label{color:var(--accent);font-size:.72rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;padding-bottom:15px;border-bottom:1px solid var(--line)}.focus-item{padding:17px 0;border-bottom:1px solid var(--line)}.focus-item:last-child{border-bottom:0;padding-bottom:0}.focus-item strong{display:block;font-size:1rem;font-weight:600;color:var(--text)}.focus-item span{display:block;color:var(--muted);font-size:.88rem;margin-top:3px}
 .eyebrow{display:inline-flex;align-items:center;gap:9px;color:var(--accent);font-size:.82rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase}
-.dot{width:7px;height:7px;border-radius:50%;background:var(--accent);box-shadow:0 0 14px var(--accent)}
+.dot{width:7px;height:7px;border-radius:50%;background:var(--accent)}
 h1{font-size:clamp(2.5rem,7vw,5.1rem);line-height:1.08;letter-spacing:-.055em;margin:22px 0 16px;font-weight:800}
 .role{font-size:clamp(1.05rem,2.4vw,1.35rem);font-weight:600;color:#d8e2f6;margin:0 0 18px}
 .intro{max-width:690px;color:var(--muted);font-size:1.06rem;margin:0}
@@ -65,7 +65,7 @@ section{padding:54px 0}
 h2{font-size:clamp(1.6rem,3vw,2.15rem);letter-spacing:-.035em;margin:5px 0 0}
 .section-copy{color:var(--muted);max-width:720px;margin:12px 0 0}
 .grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
-.card{background:linear-gradient(145deg,var(--surface2),var(--surface));border:1px solid var(--line);border-radius:9px;padding:22px;min-width:0;transition:border-color .2s}.card:hover{border-color:#40516a}}
+.card{background:linear-gradient(145deg,var(--surface2),var(--surface));border:1px solid var(--line);border-radius:8px;padding:22px;min-width:0;transition:border-color .2s}.card:hover{border-color:#40516a}}
 .card h3{font-size:1.08rem;margin:0 0 8px}
 .card p{color:var(--muted);margin:0}
 .card-top{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:14px}
@@ -127,15 +127,10 @@ html[dir="rtl"] h1{letter-spacing:0}
       </div>
     </div>
     <aside class="hero-visual" aria-label="Current technical focus">
-      <div class="terminal-top"><span class="terminal-label">CURRENT TECHNICAL FOCUS</span></div>
-      <div class="terminal-body">
-        <div class="muted-code">01 / KNOWLEDGE SYSTEMS</div>
-        <div><span class="cyan-code">Arabic RAG</span> · Qdrant · Ollama</div>
-        <div class="muted-code" style="margin-top:16px">02 / AGENT APPLICATIONS</div>
-        <div><span class="cyan-code">Voice assistant</span> · FastAPI · Groq</div>
-        <div class="muted-code" style="margin-top:16px">03 / DEVELOPMENT</div>
-        <div><span class="cyan-code">Python</span> · APIs · n8n</div>
-      </div>
+      <div class="focus-label" data-en="CURRENT WORK" data-ar="المشاريع الحالية">CURRENT WORK</div>
+      <div class="focus-item"><strong>Arabic RAG Assistant</strong><span>Python · Qdrant · Ollama · Qwen</span></div>
+      <div class="focus-item"><strong>Restaurant Voice Assistant</strong><span>Python · FastAPI · Streamlit · Groq</span></div>
+      <div class="focus-item"><strong>Workflow Automation</strong><span>n8n · APIs</span></div>
     </aside>
   </div>
 
