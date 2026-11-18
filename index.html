@@ -38,18 +38,25 @@ header .wrap{display:flex;justify-content:space-between;align-items:center;gap:1
 .brand{font-weight:700;color:var(--fg);text-decoration:none}
 nav a{color:var(--muted);text-decoration:none;margin-inline-start:20px;font-size:.95rem}
 nav a:hover{color:var(--accent)}
-article{padding:48px 0 8px}
+.intro{padding:52px 0 36px;border-bottom:1px solid var(--line)}
 .kicker{color:var(--accent);font-weight:600;font-size:.95rem;margin:0 0 8px}
 h1{font-size:2.2rem;line-height:1.45;margin:0 0 14px;font-weight:700}
-.byline{color:var(--muted);font-size:.92rem;margin:0 0 30px;padding-bottom:22px;border-bottom:1px solid var(--line)}
-.answer{background:var(--soft);border-inline-start:3px solid var(--accent);padding:14px 20px;margin:0 0 12px;border-radius:0 8px 8px 0}
-.answer p{margin:0}
-h2{font-size:1.35rem;line-height:1.6;margin:44px 0 12px;font-weight:700}
+.byline{color:var(--muted);font-size:.92rem;margin:0 0 18px}
+.lead{font-size:1.05rem;margin:0 0 26px;max-width:600px}
+.toc{background:var(--soft);border-radius:10px;padding:16px 24px}
+.toc strong{display:block;margin-bottom:6px}
+.toc ol{margin:0;padding-inline-start:22px}
+.toc li{margin-bottom:2px}
+.toc a{text-decoration:none}
+.toc a:hover{text-decoration:underline}
+section{padding:8px 0 4px}
+h2{font-size:1.35rem;line-height:1.6;margin:40px 0 12px;font-weight:700;scroll-margin-top:16px}
 p{margin:0 0 14px}
 ol,ul{margin:0 0 14px;padding-inline-start:24px}
 li{margin-bottom:8px}
+.answer{background:var(--soft);border-inline-start:3px solid var(--accent);padding:14px 20px;margin:0 0 12px;border-radius:0 8px 8px 0}
+.answer p{margin:0}
 .src{color:var(--muted);font-size:.92rem}
-.src bdi{direction:ltr}
 .cta{margin:48px 0 0;padding:24px 0;border-top:1px solid var(--line)}
 .cta h2{margin-top:0}
 .btns{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
@@ -59,7 +66,7 @@ li{margin-bottom:8px}
 footer{margin-top:32px;padding:22px 0 40px;border-top:1px solid var(--line);color:var(--muted);font-size:.92rem}
 footer a{color:var(--muted);margin-inline-end:16px;text-decoration:none}
 footer a:hover{color:var(--accent)}
-@media (max-width:480px){h1{font-size:1.75rem}article{padding-top:32px}}
+@media (max-width:480px){h1{font-size:1.75rem}.intro{padding-top:34px}}
 </style>
 </head>
 <body>
@@ -76,18 +83,37 @@ footer a:hover{color:var(--accent)}
 </header>
 
 <main class="wrap">
-<article>
 
+<div class="intro">
 <p class="kicker">دليل</p>
 <h1>ما هو RAG وكيف تبني نظاماً لشركتك؟</h1>
 <p class="byline">بقلم <a href="/">مهند صابر (Mohanned Saber)</a>، مهندس AI Agents وRAG · آخر تحديث: 18 نوفمبر 2026</p>
+<p class="lead">دليل عملي مبسط يشرح تقنية RAG خطوة بخطوة، ويذكر أشهر الأخطاء، ويختم بتجربة من مشروع عربي قيد التطوير.</p>
+<nav class="toc" aria-label="فهرس الدليل">
+<strong>في هذا الدليل</strong>
+<ol>
+<li><a href="#what">ما هو RAG باختصار؟</a></li>
+<li><a href="#how">كيف يعمل نظام RAG؟</a></li>
+<li><a href="#vs">RAG أم الضبط الدقيق؟</a></li>
+<li><a href="#build">كيف أبني نظاماً لشركتي؟</a></li>
+<li><a href="#mistakes">أشهر الأخطاء</a></li>
+<li><a href="#hallucination">هل يلغي RAG الهلوسة؟</a></li>
+<li><a href="#experience">من تجربتي</a></li>
+</ol>
+</nav>
+</div>
 
-<h2 style="margin-top:0">ما هو RAG باختصار؟</h2>
+<article>
+
+<section id="what">
+<h2>ما هو RAG باختصار؟</h2>
 <div class="answer">
 <p><strong>RAG (التوليد المعزز بالاسترجاع) هو أسلوب يجعل نموذج الذكاء الاصطناعي يبحث أولاً في مستنداتك أنت، ثم يكتب إجابته اعتماداً على ما وجده.</strong> بهذا يجيب عن أسئلة تخص شركتك (سياساتها ومنتجاتها وعقودها) بدل أن يعتمد على معلوماته العامة فقط، ويقلّ احتمال اختلاقه للإجابات.</p>
 </div>
 <p class="src">ظهر المصطلح في ورقة بحثية لباحثين من Facebook AI Research عام 2020 بعنوان <bdi>Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks</bdi> (المصدر: <bdi>arxiv.org/abs/2005.11401</bdi>).</p>
+</section>
 
+<section id="how">
 <h2>كيف يعمل نظام RAG؟ (5 مراحل)</h2>
 <ol>
 <li><strong>تقسيم المستندات (Chunking):</strong> تُقطّع الملفات إلى أجزاء صغيرة مفهومة.</li>
@@ -96,14 +122,18 @@ footer a:hover{color:var(--accent)}
 <li><strong>الاسترجاع (Retrieval):</strong> عند سؤال المستخدم، يُبحث عن الأجزاء الأقرب معنىً للسؤال.</li>
 <li><strong>التوليد (Generation):</strong> تُعطى هذه الأجزاء للنموذج مع السؤال ليكتب إجابة مستندة إليها.</li>
 </ol>
+</section>
 
+<section id="vs">
 <h2>متى أستخدم RAG ومتى أستخدم الضبط الدقيق (Fine-tuning)؟</h2>
 <ul>
 <li><strong>استخدم RAG</strong> عندما تتغير معلوماتك باستمرار، أو تريد إجابات مع ذكر المصدر، أو تريد البدء بسرعة وتكلفة أقل.</li>
 <li><strong>استخدم الضبط الدقيق</strong> عندما تريد تغيير أسلوب النموذج أو سلوكه أو تنسيق مخرجاته، لا إضافة معلومات جديدة.</li>
 <li>كثير من الأنظمة العملية تبدأ بـ RAG لأنه أسهل في التحديث: تغيّر المستند فتتغير الإجابة دون إعادة تدريب.</li>
 </ul>
+</section>
 
+<section id="build">
 <h2>كيف أبني نظام RAG لشركتي؟</h2>
 <ol>
 <li><strong>حدد سؤالاً واحداً واضحاً:</strong> مثل "أجب عملاءنا عن سياسة الاسترجاع". النطاق الضيق يعطي نتائج أفضل.</li>
@@ -114,7 +144,9 @@ footer a:hover{color:var(--accent)}
 <li><strong>اعرض المصدر مع كل إجابة:</strong> ليتحقق المستخدم بنفسه.</li>
 <li><strong>حدّث المستندات دورياً</strong> وراقب الأسئلة التي يفشل فيها النظام.</li>
 </ol>
+</section>
 
+<section id="mistakes">
 <h2>ما أشهر أخطاء أنظمة RAG؟</h2>
 <ul>
 <li>تقطيع المستندات بشكل عشوائي يفصل المعلومة عن سياقها.</li>
@@ -123,10 +155,14 @@ footer a:hover{color:var(--accent)}
 <li>عدم السماح للنظام بقول "لا أعرف" عندما لا يجد الإجابة.</li>
 <li>إهمال عرض المصادر، فتفقد الإجابات مصداقيتها.</li>
 </ul>
+</section>
 
+<section id="hallucination">
 <h2>هل يلغي RAG الهلوسة تماماً؟</h2>
 <p>لا. RAG <strong>يقلل</strong> الهلوسة لكنه لا يلغيها، لأن جودة الإجابة تعتمد على جودة المستندات المسترجعة وعلى طريقة صياغة التعليمات للنموذج. لذلك يلزم الاختبار والمراقبة المستمرة.</p>
+</section>
 
+<section id="experience">
 <h2>من تجربتي: مساعد RAG عربي لشركة شحن</h2>
 <p>أطوّر حالياً (المشروع قيد التطوير) مساعداً ذكياً باللغة العربية لشركة شحن، يجيب عن استفسارات العملاء اعتماداً على ملفات الشركة نفسها: سياسات الاسترجاع، وخطوط النقل، وتتبع الشحنات، والاستفسارات العامة.</p>
 <p><strong>أهم ما تعلمته:</strong> الجودة لا تأتي من النموذج وحده، بل من الموازنة بين سرعة الاسترجاع وجودة الإجابة. استغرق ذلك تجارب متكررة لضبط حجم التقطيع (Chunk size) والتداخل بين الأجزاء (Chunk overlap)، وهما من أكثر الإعدادات تأثيراً في النتيجة.</p>
@@ -139,6 +175,7 @@ footer a:hover{color:var(--accent)}
 <li>Streamlit لبناء واجهة المستخدم (قيد الإنجاز)</li>
 </ul>
 <p><a href="https://github.com/mohanadsaber444-sudo/arabic-rag">المستودع على GitHub</a></p>
+</section>
 
 <div class="cta">
 <h2>هل تفكر ببناء نظام RAG لشركتك؟</h2>
