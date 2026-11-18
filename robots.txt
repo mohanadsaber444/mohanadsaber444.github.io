@@ -13,4 +13,4 @@ Allow: /
 User-agent: Googlebot
 Allow: /
 
-Sitemap: https://mohanadsaber444-sudo.github.io/sitemap.xml
+Sitemap: https://mohanadsaber444.github.io/sitemap.xml
