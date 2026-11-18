@@ -3,34 +3,45 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>ما هو RAG وكيف تبني نظاماً لشركتك؟ | مهند صابر</title>
-<meta name="description" content="شرح مبسط لتقنية RAG (التوليد المعزز بالاسترجاع): كيف تعمل، متى تستخدمها بدل الضبط الدقيق، وخطوات بناء نظام لشركتك.">
-<link rel="canonical" href="https://mohanadsaber444-sudo.github.io/rag-guide.html">
-<meta property="og:title" content="ما هو RAG وكيف تبني نظاماً لشركتك؟">
-<meta property="og:description" content="شرح مبسط لتقنية RAG وخطوات بناء نظام لشركتك وأشهر الأخطاء.">
-<meta property="og:type" content="article">
-<meta property="og:url" content="https://mohanadsaber444-sudo.github.io/rag-guide.html">
+<title>مهند صابر | Mohanned Saber, AI Agent Engineer</title>
+<meta name="description" content="مهند صابر (Mohanned Saber): مهندس ذكاء اصطناعي متخصص في أنظمة RAG وبناء الـ AI Agents. AI Engineer specializing in AI solutions, RAG systems, and AI agents.">
+<link rel="canonical" href="https://mohanadsaber444-sudo.github.io/">
+<meta property="og:title" content="مهند صابر | Mohanned Saber, AI Agent Engineer">
+<meta property="og:description" content="AI Engineer specializing in AI solutions, RAG systems, and building AI agents.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://mohanadsaber444-sudo.github.io/">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
-  "@type": "Article",
-  "headline": "ما هو RAG وكيف تبني نظاماً لشركتك؟",
-  "inLanguage": "ar",
-  "datePublished": "2026-11-18",
-  "dateModified": "2026-11-18",
-  "mainEntityOfPage": "https://mohanadsaber444-sudo.github.io/rag-guide.html",
-  "author": { "@id": "https://mohanadsaber444-sudo.github.io/#person" }
+  "@type": "Person",
+  "@id": "https://mohanadsaber444-sudo.github.io/#person",
+  "name": "Mohanned Saber",
+  "alternateName": ["مهند صابر", "Mohanned Saber Hussein Ali"],
+  "jobTitle": "AI Agent Engineer",
+  "description": "AI Engineer specializing in AI solutions, RAG systems, and building AI agents.",
+  "url": "https://mohanadsaber444-sudo.github.io/",
+  "email": "mailto:mohanadsaber444@gmail.com",
+  "knowsAbout": ["AI Agents", "Retrieval-Augmented Generation (RAG)", "AI Automation"],
+  "address": { "@type": "PostalAddress", "addressCountry": "SD" },
+  "sameAs": [
+    "https://github.com/mohanadsaber444-sudo",
+    "https://www.linkedin.com/in/mohanned-saber-792b65365/",
+    "https://x.com/MohanadSab99846",
+    "https://youtube.com/@mohanadsaberoffical",
+    "https://www.instagram.com/mohanned.saber.ai249/",
+    "https://www.facebook.com/mohanned.saber.ai249/"
+  ]
 }
 </script>
 <style>
-:root{--bg:#fbfaf8;--fg:#1b1b1a;--muted:#6a6a66;--line:#e5e2dc;--accent:#0f5c4d;--on-accent:#ffffff;--soft:#f1f0eb}
-@media (prefers-color-scheme:dark){:root{--bg:#111312;--fg:#ecece8;--muted:#9b9b95;--line:#2a2d2b;--accent:#5fc4a9;--on-accent:#0b1210;--soft:#181b1a}}
+:root{--bg:#fbfaf8;--fg:#1b1b1a;--muted:#6a6a66;--line:#e5e2dc;--accent:#0f5c4d;--on-accent:#ffffff}
+@media (prefers-color-scheme:dark){:root{--bg:#111312;--fg:#ecece8;--muted:#9b9b95;--line:#2a2d2b;--accent:#5fc4a9;--on-accent:#0b1210}}
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
-body{margin:0;background:var(--bg);color:var(--fg);font-family:"Cairo",system-ui,-apple-system,"Segoe UI",Tahoma,Arial,sans-serif;font-size:17px;line-height:2}
+body{margin:0;background:var(--bg);color:var(--fg);font-family:"Cairo",system-ui,-apple-system,"Segoe UI",Tahoma,Arial,sans-serif;font-size:17px;line-height:1.95}
 a{color:var(--accent)}
 .wrap{max-width:720px;margin:0 auto;padding:0 22px}
 header{padding:22px 0;border-bottom:1px solid var(--line)}
@@ -38,35 +49,28 @@ header .wrap{display:flex;justify-content:space-between;align-items:center;gap:1
 .brand{font-weight:700;color:var(--fg);text-decoration:none}
 nav a{color:var(--muted);text-decoration:none;margin-inline-start:20px;font-size:.95rem}
 nav a:hover{color:var(--accent)}
-.intro{padding:52px 0 36px;border-bottom:1px solid var(--line)}
-.kicker{color:var(--accent);font-weight:600;font-size:.95rem;margin:0 0 8px}
-h1{font-size:2.2rem;line-height:1.45;margin:0 0 14px;font-weight:700}
-.byline{color:var(--muted);font-size:.92rem;margin:0 0 18px}
-.lead{font-size:1.05rem;margin:0 0 26px;max-width:600px}
-.toc{background:var(--soft);border-radius:10px;padding:16px 24px}
-.toc strong{display:block;margin-bottom:6px}
-.toc ol{margin:0;padding-inline-start:22px}
-.toc li{margin-bottom:2px}
-.toc a{text-decoration:none}
-.toc a:hover{text-decoration:underline}
-section{padding:8px 0 4px}
-h2{font-size:1.35rem;line-height:1.6;margin:40px 0 12px;font-weight:700;scroll-margin-top:16px}
-p{margin:0 0 14px}
-ol,ul{margin:0 0 14px;padding-inline-start:24px}
-li{margin-bottom:8px}
-.answer{background:var(--soft);border-inline-start:3px solid var(--accent);padding:14px 20px;margin:0 0 12px;border-radius:0 8px 8px 0}
-.answer p{margin:0}
-.src{color:var(--muted);font-size:.92rem}
-.cta{margin:48px 0 0;padding:24px 0;border-top:1px solid var(--line)}
-.cta h2{margin-top:0}
-.btns{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
-.btn{display:inline-block;padding:9px 22px;border-radius:8px;border:1px solid var(--accent);color:var(--accent);text-decoration:none;font-weight:600;line-height:1.8}
+.hero{padding:64px 0 24px}
+.hero h1{font-size:2.6rem;line-height:1.3;margin:0 0 6px;font-weight:700}
+.role{color:var(--accent);font-weight:600;font-size:1.15rem;margin:0 0 22px}
+.hero p{margin:0 0 12px;max-width:600px}
+.en{color:var(--muted);direction:ltr;text-align:left;font-size:.98rem}
+section{padding:44px 0 8px}
+h2{font-size:1.3rem;margin:0 0 18px;font-weight:700}
+.rows{border-top:1px solid var(--line)}
+.row{padding:16px 0;border-bottom:1px solid var(--line)}
+.row strong{display:block}
+.row span{color:var(--muted)}
+.tag{display:inline-block;font-size:.82rem;color:var(--muted);border:1px solid var(--line);border-radius:6px;padding:0 10px;margin-bottom:8px}
+.meta{color:var(--muted);font-size:.95rem;direction:ltr;text-align:right}
+.contact p{margin:0 0 18px}
+.btns{display:flex;gap:10px;flex-wrap:wrap}
+.btn{display:inline-block;padding:9px 22px;border-radius:8px;border:1px solid var(--accent);color:var(--accent);text-decoration:none;font-weight:600}
 .btn.main{background:var(--accent);color:var(--on-accent)}
 .btn:hover{opacity:.88}
-footer{margin-top:32px;padding:22px 0 40px;border-top:1px solid var(--line);color:var(--muted);font-size:.92rem}
+footer{margin-top:56px;padding:22px 0 40px;border-top:1px solid var(--line);color:var(--muted);font-size:.92rem}
 footer a{color:var(--muted);margin-inline-end:16px;text-decoration:none}
 footer a:hover{color:var(--accent)}
-@media (max-width:480px){h1{font-size:1.75rem}.intro{padding-top:34px}}
+@media (max-width:480px){.hero{padding-top:44px}.hero h1{font-size:2.1rem}}
 </style>
 </head>
 <body>
@@ -75,126 +79,68 @@ footer a:hover{color:var(--accent)}
 <div class="wrap">
 <a class="brand" href="/">مهند صابر</a>
 <nav>
-<a href="/">الرئيسية</a>
-<a href="/#project">مشروعي</a>
-<a href="/#contact">تواصل</a>
+<a href="#services">خدماتي</a>
+<a href="#project">مشروعي</a>
+<a href="#contact">تواصل</a>
 </nav>
 </div>
 </header>
 
 <main class="wrap">
 
-<div class="intro">
-<p class="kicker">دليل</p>
-<h1>ما هو RAG وكيف تبني نظاماً لشركتك؟</h1>
-<p class="byline">بقلم <a href="/">مهند صابر (Mohanned Saber)</a>، مهندس AI Agents وRAG · آخر تحديث: 18 نوفمبر 2026</p>
-<p class="lead">دليل عملي مبسط يشرح تقنية RAG خطوة بخطوة، ويذكر أشهر الأخطاء، ويختم بتجربة من مشروع عربي قيد التطوير.</p>
-<nav class="toc" aria-label="فهرس الدليل">
-<strong>في هذا الدليل</strong>
-<ol>
-<li><a href="#what">ما هو RAG باختصار؟</a></li>
-<li><a href="#how">كيف يعمل نظام RAG؟</a></li>
-<li><a href="#vs">RAG أم الضبط الدقيق؟</a></li>
-<li><a href="#build">كيف أبني نظاماً لشركتي؟</a></li>
-<li><a href="#mistakes">أشهر الأخطاء</a></li>
-<li><a href="#hallucination">هل يلغي RAG الهلوسة؟</a></li>
-<li><a href="#experience">من تجربتي</a></li>
-</ol>
-</nav>
+<div class="hero">
+<h1>مهند صابر</h1>
+<p class="role">مهندس ذكاء اصطناعي · AI Agents وأنظمة RAG</p>
+<p>أصمّم وأبني حلول ذكاء اصطناعي للشركات: أنظمة RAG تجيب عن الأسئلة من مستنداتكم باللغة العربية، ووكلاء أذكياء يؤدون مهام فعلية.</p>
+<p class="en">Mohanned Saber. AI Engineer specializing in AI solutions, RAG systems, and building AI agents.</p>
 </div>
 
-<article>
-
-<section id="what">
-<h2>ما هو RAG باختصار؟</h2>
-<div class="answer">
-<p><strong>RAG (التوليد المعزز بالاسترجاع) هو أسلوب يجعل نموذج الذكاء الاصطناعي يبحث أولاً في مستنداتك أنت، ثم يكتب إجابته اعتماداً على ما وجده.</strong> بهذا يجيب عن أسئلة تخص شركتك (سياساتها ومنتجاتها وعقودها) بدل أن يعتمد على معلوماته العامة فقط، ويقلّ احتمال اختلاقه للإجابات.</p>
+<section id="services">
+<h2>خدماتي</h2>
+<div class="rows">
+<div class="row"><strong>وكلاء الذكاء الاصطناعي (AI Agents)</strong><span>وكلاء يستخدمون الأدوات وبيانات الشركة لإنجاز مهام حقيقية.</span></div>
+<div class="row"><strong>أنظمة RAG بالعربية</strong><span>أنظمة استرجاع تجيب عن أسئلة العملاء والموظفين من مستندات شركتك.</span></div>
+<div class="row"><strong>أتمتة الأعمال بالذكاء الاصطناعي</strong><span>أتمتة العمليات المتكررة لتوفير الوقت وتقليل الأخطاء.</span></div>
 </div>
-<p class="src">ظهر المصطلح في ورقة بحثية لباحثين من Facebook AI Research عام 2020 بعنوان <bdi>Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks</bdi> (المصدر: <bdi>arxiv.org/abs/2005.11401</bdi>).</p>
 </section>
 
-<section id="how">
-<h2>كيف يعمل نظام RAG؟ (5 مراحل)</h2>
-<ol>
-<li><strong>تقسيم المستندات (Chunking):</strong> تُقطّع الملفات إلى أجزاء صغيرة مفهومة.</li>
-<li><strong>التحويل إلى متجهات (Embeddings):</strong> يُحوَّل كل جزء إلى أرقام تمثل معناه.</li>
-<li><strong>التخزين:</strong> تُحفظ المتجهات في قاعدة بيانات متجهات (Vector Database).</li>
-<li><strong>الاسترجاع (Retrieval):</strong> عند سؤال المستخدم، يُبحث عن الأجزاء الأقرب معنىً للسؤال.</li>
-<li><strong>التوليد (Generation):</strong> تُعطى هذه الأجزاء للنموذج مع السؤال ليكتب إجابة مستندة إليها.</li>
-</ol>
+<section id="project">
+<h2>مشروعي الحالي</h2>
+<div class="rows">
+<div class="row">
+<span class="tag">قيد التطوير</span>
+<strong>مساعد RAG عربي لشركة شحن</strong>
+<span>مساعد يجيب عن استفسارات العملاء من ملفات الشركة: سياسات الاسترجاع، وخطوط النقل، وتتبع الشحنات. ضبطتُ حجم التقطيع والتداخل بين الأجزاء للموازنة بين سرعة الاسترجاع وجودة الإجابة، وواجهة Streamlit قيد الإنجاز.</span>
+<div class="meta">Python · Qdrant · Ollama · Qwen embeddings · Groq · Streamlit</div>
+<div style="margin-top:8px"><a href="https://github.com/mohanadsaber444-sudo/arabic-rag">المستودع على GitHub</a></div>
+</div>
+<div class="row">
+<strong>دليل: ما هو RAG وكيف تبني نظاماً لشركتك؟</strong>
+<span>شرح مبسط لتقنية RAG وخطوات البناء وأشهر الأخطاء. <a href="/rag-guide.html">اقرأ الدليل</a></span>
+</div>
+</div>
 </section>
 
-<section id="vs">
-<h2>متى أستخدم RAG ومتى أستخدم الضبط الدقيق (Fine-tuning)؟</h2>
-<ul>
-<li><strong>استخدم RAG</strong> عندما تتغير معلوماتك باستمرار، أو تريد إجابات مع ذكر المصدر، أو تريد البدء بسرعة وتكلفة أقل.</li>
-<li><strong>استخدم الضبط الدقيق</strong> عندما تريد تغيير أسلوب النموذج أو سلوكه أو تنسيق مخرجاته، لا إضافة معلومات جديدة.</li>
-<li>كثير من الأنظمة العملية تبدأ بـ RAG لأنه أسهل في التحديث: تغيّر المستند فتتغير الإجابة دون إعادة تدريب.</li>
-</ul>
-</section>
-
-<section id="build">
-<h2>كيف أبني نظام RAG لشركتي؟</h2>
-<ol>
-<li><strong>حدد سؤالاً واحداً واضحاً:</strong> مثل "أجب عملاءنا عن سياسة الاسترجاع". النطاق الضيق يعطي نتائج أفضل.</li>
-<li><strong>اجمع المستندات ونظّفها:</strong> أزل المكرر والقديم والمتعارض.</li>
-<li><strong>اختر حجم التقطيع:</strong> جرّب أحجاماً مختلفة وقارن النتائج.</li>
-<li><strong>ابنِ نموذجاً أولياً صغيراً:</strong> بمكتبات مفتوحة المصدر وقاعدة متجهات مجانية.</li>
-<li><strong>اختبره بأسئلة حقيقية:</strong> اجمع 30 إلى 50 سؤالاً من عملائك مع إجاباتها الصحيحة، وقِس دقة الإجابات.</li>
-<li><strong>اعرض المصدر مع كل إجابة:</strong> ليتحقق المستخدم بنفسه.</li>
-<li><strong>حدّث المستندات دورياً</strong> وراقب الأسئلة التي يفشل فيها النظام.</li>
-</ol>
-</section>
-
-<section id="mistakes">
-<h2>ما أشهر أخطاء أنظمة RAG؟</h2>
-<ul>
-<li>تقطيع المستندات بشكل عشوائي يفصل المعلومة عن سياقها.</li>
-<li>عدم اختبار النظام بأسئلة حقيقية قبل إطلاقه.</li>
-<li>ترك مستندات قديمة أو متعارضة في قاعدة المعرفة.</li>
-<li>عدم السماح للنظام بقول "لا أعرف" عندما لا يجد الإجابة.</li>
-<li>إهمال عرض المصادر، فتفقد الإجابات مصداقيتها.</li>
-</ul>
-</section>
-
-<section id="hallucination">
-<h2>هل يلغي RAG الهلوسة تماماً؟</h2>
-<p>لا. RAG <strong>يقلل</strong> الهلوسة لكنه لا يلغيها، لأن جودة الإجابة تعتمد على جودة المستندات المسترجعة وعلى طريقة صياغة التعليمات للنموذج. لذلك يلزم الاختبار والمراقبة المستمرة.</p>
-</section>
-
-<section id="experience">
-<h2>من تجربتي: مساعد RAG عربي لشركة شحن</h2>
-<p>أطوّر حالياً (المشروع قيد التطوير) مساعداً ذكياً باللغة العربية لشركة شحن، يجيب عن استفسارات العملاء اعتماداً على ملفات الشركة نفسها: سياسات الاسترجاع، وخطوط النقل، وتتبع الشحنات، والاستفسارات العامة.</p>
-<p><strong>أهم ما تعلمته:</strong> الجودة لا تأتي من النموذج وحده، بل من الموازنة بين سرعة الاسترجاع وجودة الإجابة. استغرق ذلك تجارب متكررة لضبط حجم التقطيع (Chunk size) والتداخل بين الأجزاء (Chunk overlap)، وهما من أكثر الإعدادات تأثيراً في النتيجة.</p>
-<p><strong>الأدوات المستخدمة:</strong></p>
-<ul>
-<li>لغة Python ومحرر VS Code</li>
-<li>قاعدة المتجهات Qdrant</li>
-<li>نموذج تضمين (Embedding) محلي من Qwen يعمل عبر Ollama</li>
-<li>نماذج لغوية مفتوحة عبر منصة Groq (الخطة المجانية) لتوليد الإجابات</li>
-<li>Streamlit لبناء واجهة المستخدم (قيد الإنجاز)</li>
-</ul>
-<p><a href="https://github.com/mohanadsaber444-sudo/arabic-rag">المستودع على GitHub</a></p>
-</section>
-
-<div class="cta">
-<h2>هل تفكر ببناء نظام RAG لشركتك؟</h2>
-<p>راسلني لنناقش فكرتك ونحدد أنسب بداية لها.</p>
+<section id="contact" class="contact">
+<h2>تواصل معي</h2>
+<p>للتعاون أو للاستفسار عن مشروع، راسلني على أي قناة تناسبك:</p>
 <div class="btns">
 <a class="btn main" href="https://wa.me/249990055096">واتساب</a>
 <a class="btn" href="mailto:mohanadsaber444@gmail.com">البريد الإلكتروني</a>
 <a class="btn" href="https://www.linkedin.com/in/mohanned-saber-792b65365/">LinkedIn</a>
 </div>
-</div>
+<p style="margin-top:14px;color:var(--muted);font-size:.95rem;direction:ltr;text-align:right">mohanadsaber444@gmail.com</p>
+</section>
 
-</article>
 </main>
 
 <footer>
 <div class="wrap">
-<a href="/">← العودة إلى الرئيسية</a>
 <a rel="me" href="https://github.com/mohanadsaber444-sudo">GitHub</a>
-<a rel="me" href="https://www.linkedin.com/in/mohanned-saber-792b65365/">LinkedIn</a>
+<a rel="me" href="https://x.com/MohanadSab99846">X</a>
+<a rel="me" href="https://youtube.com/@mohanadsaberoffical">YouTube</a>
+<a rel="me" href="https://www.instagram.com/mohanned.saber.ai249/">Instagram</a>
+<a rel="me" href="https://www.facebook.com/mohanned.saber.ai249/">Facebook</a>
 </div>
 </footer>
 
