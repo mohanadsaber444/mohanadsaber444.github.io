@@ -41,6 +41,7 @@ body{margin:0;background:radial-gradient(ellipse at 78% 5%,rgba(0,130,170,.10),t
 a{color:inherit}
 button{font:inherit}
 .wrap{width:min(var(--max),calc(100% - 40px));margin-inline:auto}
+.skip-link{position:absolute;top:-60px;left:16px;z-index:30;background:var(--accent);color:#041019;padding:8px 12px;border-radius:7px;font-weight:700}.skip-link:focus{top:12px}
 header{position:sticky;top:0;z-index:10;background:rgba(8,11,24,.9);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
 .nav{min-height:72px;display:flex;align-items:center;justify-content:space-between;gap:20px}
 .brand{font-weight:800;letter-spacing:.04em;text-decoration:none;font-size:.95rem}
@@ -74,7 +75,7 @@ h2{font-size:clamp(1.6rem,3vw,2.15rem);letter-spacing:-.035em;margin:5px 0 0}
 .card-link{display:inline-block;margin-top:16px;color:var(--accent);text-decoration:none;font-weight:600;font-size:.9rem}
 .skills{display:flex;flex-wrap:wrap;gap:10px}
 .skill{border:1px solid var(--line);background:var(--surface);border-radius:8px;padding:8px 12px;color:#dce5f5;font-size:.88rem}
-.cert-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.cert-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.cert-group-label{grid-column:1/-1;color:var(--accent);font-size:.78rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding-top:12px}.cert{transition:border-color .2s,transform .2s}.cert:hover{border-color:#3a5973;transform:translateY(-2px)}
 .cert{border:1px solid var(--line);background:var(--surface);border-radius:10px;padding:15px 17px}
 .cert strong{display:block;font-size:.92rem;line-height:1.45}
 .cert span{display:block;color:var(--muted);font-size:.82rem;margin-top:5px}
@@ -96,6 +97,7 @@ html[dir="rtl"] h1{letter-spacing:0}
 </style>
 </head>
 <body>
+<a class="skip-link" href="#main-content" data-en="Skip to content" data-ar="تجاوز إلى المحتوى">Skip to content</a>
 <header>
   <div class="wrap nav">
     <a class="brand" href="#home">MOHANNWD SABER</a>
@@ -104,13 +106,14 @@ html[dir="rtl"] h1{letter-spacing:0}
       <a href="#specializations" data-en="Specializations" data-ar="التخصصات">Specializations</a>
       <a href="#projects" data-en="Projects" data-ar="المشاريع">Projects</a>
       <a href="#skills" data-en="Skills" data-ar="المهارات">Skills</a>
+      <a href="#experience" data-en="Practice" data-ar="الخبرة">Practice</a>
       <a href="#certifications" data-en="Certifications" data-ar="الشهادات">Certifications</a>
       <a href="#contact" data-en="Contact" data-ar="تواصل">Contact</a>
     </nav>
     <button class="lang" id="langToggle" type="button" aria-label="Switch language">العربية</button>
   </div>
 </header>
-<main class="wrap">
+<main class="wrap" id="main-content">
   <div class="hero" id="home">
     <div class="hero-copy">
       <div class="eyebrow"><span class="dot"></span><span data-en="AI ENGINEER" data-ar="مهندس ذكاء اصطناعي">AI ENGINEER</span></div>
@@ -180,13 +183,16 @@ html[dir="rtl"] h1{letter-spacing:0}
   <section id="certifications">
     <div class="section-head"><div class="kicker">06 / <span data-en="LEARNING" data-ar="التعلم المهني">LEARNING</span></div><h2 data-en="Certifications & Training" data-ar="الشهادات والدورات">Certifications &amp; Training</h2><p class="section-copy" data-en="Completed courses and credentials shared on my professional profile." data-ar="الشهادات والدورات المكتملة التي أدرجتها في ملفي المهني.">Completed courses and credentials shared on my professional profile.</p></div>
     <div class="cert-list">
+      <div class="cert-group-label" data-en="Core technical training" data-ar="التدريب التقني الأساسي">Core technical training</div>
       <div class="cert"><strong>Retrieval Augmented Generation (RAG)</strong><span>DeepLearning.AI · November 2026 · ID: YK1U2DDNPSZB</span></div>
       <div class="cert"><strong>Programming with Python</strong><span>University of Michigan · ID: STPCDYVADWYE</span></div>
+      <div class="cert"><strong>Prompt Engineering Specialist</strong><span>1 Million Prompts · DOBAI · July 2025</span></div>
+      <div class="cert-group-label" data-en="Claude training" data-ar="دورات Claude">Claude training</div>
       <div class="cert"><strong>Claude Platform 101</strong><span>Claude Code Community · July 2026</span></div>
       <div class="cert"><strong>Claude Code 101</strong><span>Claude Code Community · July 2026</span></div>
       <div class="cert"><strong>Claude 101</strong><span>Claude Code Community · July 2026</span></div>
       <div class="cert"><strong>Building with the Claude API</strong><span>Claude Code Community · July 2026</span></div>
-      <div class="cert"><strong>Prompt Engineering Specialist</strong><span>1 Million Prompts · DOBAI · July 2025</span></div>
+      <div class="cert-group-label" data-en="Google Generative AI" data-ar="دورات الذكاء الاصطناعي التوليدي من Google">Google Generative AI</div>
       <div class="cert"><strong>Gen AI: Beyond the Chatbot</strong><span>Google · July 2026 · ID: 25282780</span></div>
       <div class="cert"><strong>Gen AI: Unlock Foundational Concepts</strong><span>Google · July 2026 · ID: 25284322</span></div>
       <div class="cert"><strong>Gen AI: Navigate the Landscape</strong><span>Google · July 2026 · ID: 25289953</span></div>
@@ -207,7 +213,7 @@ html[dir="rtl"] h1{letter-spacing:0}
     </div>
   </section>
 </main>
-<footer><div class="wrap footer-inner"><span>© <span id="year">2026</span> MOHANNWD SABER</span><div class="footer-links"><a href="https://github.com/mohanadsaber444" target="_blank" rel="noopener noreferrer">GitHub</a><a href="https://www.linkedin.com/in/mohanadsaber444/" target="_blank" rel="noopener noreferrer">LinkedIn</a></div></div></footer>
+<footer><div class="wrap footer-inner"><span>© <span id="year">2026</span> MOHANNWD SABER</span><div class="footer-links"><a href="https://github.com/mohanadsaber444" target="_blank" rel="noopener noreferrer">GitHub</a><a href="https://www.linkedin.com/in/mohanadsaber444/" target="_blank" rel="noopener noreferrer">LinkedIn</a><a href="https://x.com/mohanadsaber444" target="_blank" rel="noopener noreferrer">X</a><a href="#home" data-en="Back to top ↑" data-ar="العودة للأعلى ↑">Back to top ↑</a></div></div></footer>
 <script>
 (function(){
   const button=document.getElementById('langToggle');
