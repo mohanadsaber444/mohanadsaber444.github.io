@@ -70,14 +70,14 @@ print(base64.b64encode(secrets.token_bytes(32)).decode())
 
 لا تشارك هذه القيم في المحادثة أو ملفات المشروع.
 
-## 4. إعداد OAuth callback
+## 4. إضافة Secrets ونشر Worker\n\nمن terminal داخل مجلد المستودع، بعد وضع قيم المتغيرات في `wrangler.toml`، أضف الأسرار التالية (سيطلب منك Wrangler إدخال كل قيمة):\n\n```bash\nnpx wrangler secret put GITHUB_CLIENT_SECRET\nnpx wrangler secret put GITHUB_APP_PRIVATE_KEY\nnpx wrangler secret put SESSION_ENCRYPTION_KEY\nnpx wrangler deploy\n```\n\nلا تحفظ قيم الأسرار في ملف أو ترسلها في المحادثة. بعد النشر، اختبر Worker على عنوانه.\n\n## 5. إعداد OAuth callback
 
 ارجع إلى OAuth App واجعل callback:
 `https://YOUR-WORKER.workers.dev/auth/callback`
 
 ثم أعد نشر Worker بعد ضبط `WORKER_ORIGIN`.
 
-## 5. اختبار قبل دمج Pull Request
+## 6. اختبار قبل دمج Pull Request
 
 1. افتح عنوان Worker، يجب أن تظهر لوحة الإدارة.
 2. اضغط تسجيل الدخول، وتأكد أن GitHub يرجع إلى Worker.
