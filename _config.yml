@@ -1,0 +1,22 @@
+title: "MOHANNED SABER"
+description: "AI Engineer | RAG & AI Agents | Python & LLMs"
+url: "https://mohanadsaber444.github.io"
+baseurl: ""
+markdown: kramdown
+permalink: /blog/posts/:title/
+plugins: []
+exclude:
+  - cloudflare
+  - README.md
+  - SETUP.md
+  - wrangler.toml
+  - package.json
+  - node_modules
+defaults:
+  - scope:
+      path: "_posts"
+    values:
+      layout: post
+      author: "MOHANNED SABER"
+      lang: ar
+      dir: rtl
