@@ -1,0 +1,15 @@
+name = "mohanned-blog-cms"
+main = "cloudflare/worker.js"
+compatibility_date = "2026-11-25"
+
+[vars]
+SITE_ORIGIN = "https://mohanadsaber444.github.io"
+WORKER_ORIGIN = "https://YOUR-WORKER.workers.dev"
+ALLOWED_GITHUB_USERNAME = "mohanadsaber444"
+REPO_OWNER = "mohanadsaber444"
+REPO_NAME = "mohanadsaber444.github.io"
+REPO_BRANCH = "main"
+
+[assets]
+directory = "./admin"
+binding = "ASSETS"
