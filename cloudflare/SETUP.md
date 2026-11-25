@@ -1,70 +1,98 @@
-# إعداد لوحة المقالات الخاصة
+# إعداد لوحة المقالات الخاصة (Cloudflare Worker + GitHub App)
 
-هذا الإعداد يضيف محررًا خاصًا إلى موقع GitHub Pages، ويستخدم Cloudflare Worker للمصادقة والنشر عبر GitHub API. لا تنشر قيم الأسرار في هذا المستودع.
+هذه البنية تُبقي موقعك العام على GitHub Pages، وتستضيف لوحة الإدارة على نفس نطاق Cloudflare Worker حتى تكون جلسة الدخول SameSite آمنة ولا تحتاج إلى مشاركة Cookies بين نطاقين.
 
-## البنية
+## البنية الأمنية
 
-- الموقع العام يبقى على GitHub Pages.
-- `/admin/` واجهة محرر ثابتة، لا تحتوي على أسرار.
-- Worker يحمي API ويعالج GitHub OAuth.
-- المقالات تُكتب في `_posts/YYYY-MM-DD-slug.md` ويحوّلها Jekyll إلى صفحات عامة.
-- GitHub Pages يبني الموقع تلقائيًا عند وصول commit.
+- تسجيل الدخول عبر GitHub OAuth للتحقق من حسابك.
+- يسمح Worker فقط بحساب GitHub المحدد في `ALLOWED_GITHUB_USERNAME`.
+- لا يتم تخزين OAuth access token في Cookie أو المتصفح؛ يُستخدم للتحقق من الهوية فقط.
+- النشر يتم بواسطة GitHub App مثبت على مستودع موقعك وحده، مع صلاحية Contents: Read and write.
+- Worker ينشئ Installation Token قصير العمر ومحدودًا بالمستودع عند النشر.
+- Cookie الجلسة: HttpOnly, Secure, SameSite=Lax، ومشفّرة بـ AES-GCM.
+- لوحة الإدارة تُخدم من Worker، ولا تُنشر ملفاتها إلى GitHub Pages.
+- المقالات المنشورة عامة. لا تكتب أسرارًا أو معلومات عملاء.
 
-## 1. أنشئ GitHub OAuth App
+## 1. إعداد GitHub OAuth App
 
-في GitHub: Settings → Developer settings → OAuth Apps → New OAuth App.
+من GitHub → Settings → Developer settings → OAuth Apps → New OAuth App:
 
-- Application name: Mohanned Blog CMS
+- Name: Mohanned Blog CMS
 - Homepage URL: `https://mohanadsaber444.github.io`
-- Authorization callback URL: `https://YOUR-WORKER.workers.dev/auth/callback`
+- Callback URL: `https://YOUR-WORKER.workers.dev/auth/callback`
 
-احتفظ بـ Client ID، وأنشئ Client Secret. لا تضع Client Secret في أي ملف داخل GitHub.
+احتفظ بـ Client ID وClient Secret. لا تضع Client Secret في GitHub repository.
 
-OAuth App يستخدم نطاق `public_repo` ليكتب إلى المستودع العام. لا تستخدم هذا التطبيق لأي غرض آخر.
+## 2. إعداد GitHub App للنشر المحدود
 
-## 2. أنشئ Cloudflare Worker
+من GitHub → Settings → Developer settings → GitHub Apps → New GitHub App:
 
-في Cloudflare Dashboard → Workers & Pages → Create Worker. انشر محتوى `worker.js` من هذا المجلد.
+- GitHub App name: Mohanned Blog Publisher
+- Homepage URL: موقعك
+- Webhook: عطّله (غير مطلوب)
+- Repository permissions → Contents: Read and write
+- باقي الصلاحيات: No access
+- Install only on this account
 
-عيّن Variables:
+بعد إنشاء التطبيق:
+1. سجّل **App ID**.
+2. أنشئ Private Key ونزّله، واحفظه بأمان.
+3. من Install App، ثبّت التطبيق على **مستودع الموقع فقط**: `mohanadsaber444.github.io`.
+4. سجّل **Installation ID** من صفحة التثبيت أو رابطها.
+
+لا تستخدم Personal Access Token لهذا النظام.
+
+## 3. نشر Worker
+
+من مجلد المشروع، انشر Worker باستخدام Wrangler. ملف `wrangler.toml` مرفق كقالب، ويجب تغيير `WORKER_ORIGIN` إلى عنوان Worker الحقيقي قبل النشر.
+
+المتغيرات العامة في `wrangler.toml`:
 - `SITE_ORIGIN`: `https://mohanadsaber444.github.io`
-- `WORKER_ORIGIN`: عنوان Worker الكامل، مثل `https://mohanned-blog-cms.<account>.workers.dev`
-- `GITHUB_CLIENT_ID`: OAuth Client ID
+- `WORKER_ORIGIN`: عنوان Worker الكامل
 - `ALLOWED_GITHUB_USERNAME`: `mohanadsaber444`
 - `REPO_OWNER`: `mohanadsaber444`
 - `REPO_NAME`: `mohanadsaber444.github.io`
 - `REPO_BRANCH`: `main`
+- `GITHUB_APP_ID`: App ID
+- `GITHUB_APP_INSTALLATION_ID`: Installation ID
+- `GITHUB_CLIENT_ID`: OAuth Client ID
 
-أضف Secrets من إعدادات Worker (لا تضعها في git):
+أضف القيم السرية عبر Wrangler/Cloudflare Secrets فقط:
 - `GITHUB_CLIENT_SECRET`: OAuth Client Secret
-- `SESSION_ENCRYPTION_KEY`: Base64 لمفتاح عشوائي 32-byte. يمكنك توليده محليًا عبر Python:
-  ```python
-  import secrets, base64
-  print(base64.b64encode(secrets.token_bytes(32)).decode())
-  ```
+- `GITHUB_APP_PRIVATE_KEY`: محتوى Private Key كاملًا (PEM)
+- `SESSION_ENCRYPTION_KEY`: مفتاح عشوائي 32-byte بصيغة Base64
 
-## 3. اربط واجهة الإدارة بالـ Worker
+توليد مفتاح الجلسة محليًا عبر Python:
+```python
+import secrets, base64
+print(base64.b64encode(secrets.token_bytes(32)).decode())
+```
 
-في `admin/index.html` غيّر `https://YOUR-WORKER.workers.dev` إلى عنوان Worker الحقيقي. هذا عنوان عام وليس سرًا.
+لا تشارك هذه القيم في المحادثة أو ملفات المشروع.
 
-## 4. مهم: إعداد callback وCookie
+## 4. إعداد OAuth callback
 
-يجب أن يكون OAuth callback هو `WORKER_ORIGIN/auth/callback`. الـ Worker يتحقق من OAuth state عبر Cookie HttpOnly، ويقصر الجلسة على اسم GitHub المسموح، ويشفّر رمز الجلسة بـ AES-GCM.
+ارجع إلى OAuth App واجعل callback:
+`https://YOUR-WORKER.workers.dev/auth/callback`
 
-## 5. إعداد GitHub Pages للبناء
+ثم أعد نشر Worker بعد ضبط `WORKER_ORIGIN`.
 
-من Settings → Pages، اختر نشر الموقع من branch `main` / root. وجود `_config.yml` يجعل GitHub Pages يبني ملفات Markdown في `_posts` باستخدام Jekyll.
+## 5. اختبار قبل دمج Pull Request
 
-تحقق من أن إعداد Pages الحالي يسمح ببناء Jekyll. إذا كان لديك workflow خاص بالنشر، لا تستبدله قبل مراجعته.
+1. افتح عنوان Worker، يجب أن تظهر لوحة الإدارة.
+2. اضغط تسجيل الدخول، وتأكد أن GitHub يرجع إلى Worker.
+3. جرّب الدخول بحساب غير `mohanadsaber444`؛ يجب أن يُرفض.
+4. انشر مقالًا تجريبيًا غير حساس.
+5. تأكد أن المقال أُضيف إلى `_posts/` وأن GitHub Pages بنى صفحة المقال.
+6. اختبر تسجيل الخروج.
+7. تأكد أن `/admin/` غير موجود ضمن ملفات GitHub Pages العامة.
 
-## 6. اختبار قبل الاستخدام
+بعد نجاح الاختبار، راجع Pull Request رقم 2 وادمجه. لم يتم دمج التغييرات تلقائيًا.
 
-1. جرّب Worker على عنوانه قبل وضعه في صفحة الإدارة.
-2. افتح `/admin/` وسجّل الدخول بحساب `mohanadsaber444`.
-3. جرّب نشر مقال تجريبي قصير.
-4. تحقق من ظهوره في `/blog/` وفي Sitemap.
-5. اختبر تسجيل الخروج ورفض حساب GitHub آخر.
+## ملاحظة عن GitHub Pages
 
-## تنبيه
+ملف `_config.yml` يستبعد `admin` و`cloudflare` و`wrangler.toml` من مخرجات Jekyll. ملف `.gitignore` يساعد على تجنب نشر ملفات الإدارة في إعدادات أخرى. لا تغيّر إعداد Pages أو workflow موجودًا قبل التأكد من طريقة البناء الحالية.
 
-المقالات المنشورة عامة. لا تكتب معلومات خاصة أو أسرار شركات داخل المقالات. إعدادات OAuth/Worker هي خطوة منفصلة عن ملفات الموقع؛ لا يمكن إكمالها من خلال commit وحده، ويجب إضافة الأسرار في لوحة Cloudflare وGitHub يدويًا.
+## ملاحظة
+
+النشر يكتب المقال مباشرة إلى الفرع المحدد بعد التحقق من الجلسة. لذلك اختبر أولًا على فرع تجريبي أو اترك `REPO_BRANCH` على فرع اختبار حتى تتأكد من البناء، ثم غيّره إلى `main`.
