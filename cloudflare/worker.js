@@ -127,6 +127,8 @@ export default {
       return json(session?{authenticated:true,login:session.login}:{authenticated:false},session?200:401,headers);
     }
     if(url.pathname==="/api/posts"&&request.method==="POST") {
+      const length=Number(request.headers.get("Content-Length")||0);
+      if(length>65000)return json({error:"Request is too large."},413,headers);
       const session=await openSession(request,env);if(!session)return json({error:"Authentication required"},401,headers);
       let body;try{body=await request.json();}catch{return json({error:"Invalid JSON"},400,headers);}
       const {title,slug,description,tags,content}=body||{};
