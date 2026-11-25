@@ -1,0 +1,26 @@
+---
+layout: null
+title: "المقالات التقنية | MOHANNED SABER"
+description: "مقالات وشروحات عملية عن RAG وAI Agents وتطبيقات النماذج اللغوية."
+permalink: /blog/
+---
+<!doctype html>
+<html lang="ar" dir="rtl"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>المقالات التقنية | MOHANNED SABER</title>
+<meta name="description" content="مقالات وشروحات عملية عن RAG وAI Agents وتطبيقات النماذج اللغوية.">
+<link rel="canonical" href="https://mohanadsaber444.github.io/blog/">
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{color-scheme:dark;--bg:#080B18;--panel:#10182b;--line:#26334c;--text:#f4f7ff;--muted:#aab5cc;--accent:#83b7bd}*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font:16px/1.9 Cairo,system-ui,sans-serif}.wrap{max-width:900px;margin:55px auto;padding:0 22px}a{color:var(--accent)}h1{font-size:clamp(2rem,5vw,3.3rem);margin:10px 0}p{color:var(--muted)}.post{border:1px solid var(--line);background:var(--panel);padding:20px;border-radius:9px;margin:15px 0}.post h2{font-size:1.25rem;margin:0 0 8px}.post h2 a{text-decoration:none}.date{font-size:13px;color:var(--muted)}.back{display:inline-block;margin-bottom:25px;text-decoration:none}
+</style></head><body><main class="wrap">
+<a class="back" href="/ar.html">← العودة إلى الموقع</a>
+<div class="date">MOHANNED SABER / AI NOTES</div><h1>المقالات التقنية</h1>
+<p>شروحات وتجارب عملية في RAG، ووكلاء الذكاء الاصطناعي، وتطوير تطبيقات LLM.</p>
+<article class="post"><div class="date">2026-11-18</div><h2><a href="/rag-guide.html">ما هو RAG وكيف تبني نظاماً لشركتك؟</a></h2><p>شرح مبسط لتقنية RAG ومراحل عملها وملاحظات من مشروع مساعد معرفي باللغة العربية.</p></article>
+{% assign posts = site.posts %}
+{% if posts.size == 0 %}<p>لا توجد مقالات منشورة حتى الآن. قريبًا ستجد هنا المقالات الجديدة.</p>{% endif %}
+{% for post in posts %}
+<article class="post"><div class="date">{{ post.date | date: "%Y-%m-%d" }}</div><h2><a href="{{ post.url }}">{{ post.title | escape }}</a></h2><p>{{ post.description | escape }}</p>{% if post.tags %}<div class="date">{{ post.tags | join: " · " }}</div>{% endif %}</article>
+{% endfor %}
+</main></body></html>
