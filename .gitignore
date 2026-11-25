@@ -1,0 +1,5 @@
+# Cloudflare Worker source and configuration
+/cloudflare/
+/wrangler.toml
+# Private admin assets are served by Cloudflare Worker, not GitHub Pages
+/admin/
