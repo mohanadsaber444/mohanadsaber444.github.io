@@ -81,7 +81,7 @@ export default {
     const headers=cors(origin,env);
     if(request.method==="OPTIONS") return new Response(null,{status:204,headers});
     if(origin && origin!==env.SITE_ORIGIN) return json({error:"Origin not allowed"},403);
-    if(url.pathname==="/auth/login"&&request.method==="GET") {
+    if(url.pathname==="/auth/login"&&request.method==="GET") return Response.redirect(env.WORKER_ORIGIN+"/auth/start",302);\n    if(false) {
       const state=randomToken(24);
       const callback=env.WORKER_ORIGIN+"/auth/callback";
       const target="https://github.com/login/oauth/authorize?"+new URLSearchParams({
@@ -100,14 +100,20 @@ export default {
       const profileResponse=await github("/user",tokenData.access_token);const profile=await profileResponse.json();
       if(profile.login!==env.ALLOWED_GITHUB_USERNAME)return new Response("This GitHub account is not authorized.",{status:403});
       const session=await seal({token:tokenData.access_token,login:profile.login,exp:Date.now()+SESSION_SECONDS*1000},env);
-      return new Response(null,{status:302,headers:{"Location":env.SITE_ORIGIN+"/admin/","Set-Cookie":cookie(COOKIE,session,SESSION_SECONDS)+"\n"+clearCookie(STATE_COOKIE)}});
+      const responseHeaders=new Headers({"Location":env.SITE_ORIGIN+"/admin/"});
+      responseHeaders.append("Set-Cookie",cookie(COOKIE,session,SESSION_SECONDS));
+      responseHeaders.append("Set-Cookie",clearCookie(STATE_COOKIE));
+      return new Response(null,{status:302,headers:responseHeaders});
     }
     if(url.pathname==="/auth/start"&&request.method==="GET") {
       const state=randomToken(24);
       const target="https://github.com/login/oauth/authorize?"+new URLSearchParams({client_id:env.GITHUB_CLIENT_ID,redirect_uri:env.WORKER_ORIGIN+"/auth/callback",scope:"public_repo",state});
       return new Response(null,{status:302,headers:{"Location":target,"Set-Cookie":cookie(STATE_COOKIE,state,300)}});
     }
-    if(url.pathname==="/auth/logout"&&request.method==="POST") return json({ok:true},200,{"Set-Cookie":clearCookie(COOKIE)});
+    if(url.pathname==="/auth/logout"&&request.method==="POST") {
+      const logoutHeaders=new Headers(headers);logoutHeaders.append("Set-Cookie",clearCookie(COOKIE));
+      return json({ok:true},200,Object.fromEntries(logoutHeaders.entries()));
+    }
     if(url.pathname==="/api/me"&&request.method==="GET") {
       const session=await openSession(request,env);
       return json(session?{authenticated:true,login:session.login}:{authenticated:false},session?200:401,headers);
