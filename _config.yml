@@ -6,6 +6,7 @@ markdown: kramdown
 permalink: /blog/posts/:title/
 plugins: []
 exclude:
+  - admin
   - cloudflare
   - README.md
   - SETUP.md
