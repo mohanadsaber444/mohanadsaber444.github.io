@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="ar" dir="rtl"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow,noarchive">
+<title>لوحة المقالات الخاصة | MOHANNED SABER</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{color-scheme:dark;--bg:#080B18;--panel:#10182b;--line:#26334c;--text:#f4f7ff;--muted:#aab5cc;--accent:#83b7bd}*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font:16px/1.8 Cairo,system-ui,sans-serif}.wrap{max-width:850px;margin:35px auto;padding:0 20px}header{display:flex;justify-content:space-between;gap:16px;align-items:center;flex-wrap:wrap;border-bottom:1px solid var(--line);padding-bottom:18px}h1{font-size:1.6rem;margin:0}p{color:var(--muted)}a{color:var(--accent)}label{display:block;font-weight:700;margin:16px 0 6px}input,textarea{width:100%;background:var(--panel);color:var(--text);border:1px solid var(--line);border-radius:8px;padding:12px;font:inherit}textarea{min-height:300px;resize:vertical}button{font:inherit;font-weight:700;border:1px solid var(--line);background:var(--panel);color:var(--text);border-radius:8px;padding:10px 16px;cursor:pointer;margin:12px 0}button.primary{background:var(--accent);color:#041019;border-color:var(--accent)}button:disabled{opacity:.5;cursor:not-allowed}.notice{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:12px;margin:16px 0}.status{color:var(--muted);white-space:pre-wrap;overflow-wrap:anywhere}.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.hidden{display:none!important}@media(max-width:620px){.grid{grid-template-columns:1fr}}
+</style></head><body><main class="wrap">
+<header><h1>لوحة إدارة المقالات</h1><a href="/blog/">عرض المدونة العامة ↗</a></header>
+<p>هذه لوحة خاصة. سجّل الدخول بحساب GitHub المصرّح به لإنشاء المقالات ونشرها.</p>
+<div id="loginPanel" class="notice"><p>يلزم تسجيل الدخول عبر GitHub قبل استخدام محرر المقالات.</p><button id="login" class="primary">تسجيل الدخول عبر GitHub</button></div>
+<section id="editor" class="hidden">
+<div class="notice">أنت مسجّل الدخول باسم <strong id="who"></strong>. عند النشر سيُحفظ المقال في مستودع الموقع، ويبدأ GitHub Pages بناء الصفحة.</div>
+<form id="postForm">
+<label for="title">عنوان المقال</label><input id="title" maxlength="140" required>
+<div class="grid"><div><label for="slug">الرابط المختصر (slug)</label><input id="slug" maxlength="80" pattern="[a-z0-9]+(-[a-z0-9]+)*" required placeholder="rag-chunking"></div><div><label for="tags">التصنيفات (افصل بفاصلة)</label><input id="tags" placeholder="RAG, Python"></div></div>
+<label for="description">وصف المقال لمحركات البحث</label><input id="description" maxlength="260" required>
+<label for="content">محتوى المقال (Markdown)</label><textarea id="content" minlength="80" required placeholder="# عنوان\n\nاكتب مقالك هنا..."></textarea>
+<p class="status">استخدم Markdown للعناوين والقوائم والروابط وأكواد البرمجة. تأكد من معاينة المقال بعد النشر.</p>
+<button class="primary" id="publish" type="submit">نشر المقال</button><button id="logout" type="button">تسجيل الخروج</button>
+</form></section><div id="message" class="notice status" role="status" aria-live="polite"></div>
+</main>
+<script>
+(function(){
+ const API="https://YOUR-WORKER.workers.dev";
+ const loginPanel=document.getElementById("loginPanel"),editor=document.getElementById("editor"),message=document.getElementById("message"),publish=document.getElementById("publish");
+ function say(text){message.textContent=text}
+ async function refresh(){try{const r=await fetch(API+"/api/me",{credentials:"include"});if(!r.ok)throw 0;const data=await r.json();loginPanel.classList.add("hidden");editor.classList.remove("hidden");document.getElementById("who").textContent=data.login;}catch{loginPanel.classList.remove("hidden");editor.classList.add("hidden");}}
+ document.getElementById("login").onclick=()=>location.href=API+"/auth/start";
+ document.getElementById("logout").onclick=async()=>{await fetch(API+"/auth/logout",{method:"POST",credentials:"include"});location.reload()};
+ document.getElementById("title").addEventListener("input",e=>{const slug=document.getElementById("slug");if(!slug.dataset.edited){slug.value=e.target.value.toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"").slice(0,80)}});
+ document.getElementById("slug").addEventListener("input",e=>e.target.dataset.edited="1");
+ document.getElementById("postForm").addEventListener("submit",async e=>{e.preventDefault();publish.disabled=true;say("جارٍ نشر المقال…");try{const payload={title:document.getElementById("title").value,slug:document.getElementById("slug").value,description:document.getElementById("description").value,tags:document.getElementById("tags").value.split(",").map(x=>x.trim()).filter(Boolean),content:document.getElementById("content").value};const r=await fetch(API+"/api/posts",{method:"POST",credentials:"include",headers:{"Content-Type":"application/json"},body:JSON.stringify(payload)});const data=await r.json();if(!r.ok)throw new Error(data.error||"فشل النشر");say("تم إرسال المقال إلى GitHub بنجاح. قد يستغرق ظهور الصفحة دقيقة أو أكثر. الرابط: "+data.url); }catch(err){say("لم يتم النشر: "+err.message)}finally{publish.disabled=false}});
+ refresh();
+})();
+</script></body></html>
