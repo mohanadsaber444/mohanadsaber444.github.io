@@ -81,15 +81,7 @@ export default {
     const headers=cors(origin,env);
     if(request.method==="OPTIONS") return new Response(null,{status:204,headers});
     if(origin && origin!==env.SITE_ORIGIN) return json({error:"Origin not allowed"},403);
-    if(url.pathname==="/auth/login"&&request.method==="GET") return Response.redirect(env.WORKER_ORIGIN+"/auth/start",302);\n    if(false) {
-      const state=randomToken(24);
-      const callback=env.WORKER_ORIGIN+"/auth/callback";
-      const target="https://github.com/login/oauth/authorize?"+new URLSearchParams({
-        client_id:env.GITHUB_CLIENT_ID,redirect_uri:callback,scope:"public_repo",state
-      });
-      return Response.redirect(target,302);
-    }
-    if(url.pathname==="/auth/callback"&&request.method==="GET") {
+    if(url.pathname==="/auth/login"&&request.method==="GET") return Response.redirect(env.WORKER_ORIGIN+"/auth/start",302);\n    if(url.pathname==="/auth/callback"&&request.method==="GET") {
       const state=url.searchParams.get("state")||"";
       const saved=getCookie(request,STATE_COOKIE);
       // State is placed in a short-lived HttpOnly cookie by /auth/start below.
@@ -112,7 +104,7 @@ export default {
     }
     if(url.pathname==="/auth/logout"&&request.method==="POST") {
       const logoutHeaders=new Headers(headers);logoutHeaders.append("Set-Cookie",clearCookie(COOKIE));
-      return json({ok:true},200,Object.fromEntries(logoutHeaders.entries()));
+      return new Response(JSON.stringify({ok:true}),{status:200,headers:new Headers([...logoutHeaders.entries(),["Content-Type","application/json; charset=utf-8"]])});
     }
     if(url.pathname==="/api/me"&&request.method==="GET") {
       const session=await openSession(request,env);
